@@ -1,0 +1,1 @@
+I switch between languages frequently, so this code helps with syntax, plotting techniques, and general tricks.
