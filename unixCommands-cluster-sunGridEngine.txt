@@ -1,0 +1,29 @@
+##############################
+# Qsub - job array
+
+####Parameter
+-tc $numJobsRunning
+
+####overallScript.sh
+
+
+#!/bin/sh
+listF=$1
+var2=$2
+totalF=$(wc -l $listF | awk -F" " '{print $1}')
+jobRunScript=`qsub -V -t 1-${totalF} -v listF=$listF,var2=$var2 runScript.sh`
+
+#jobID=$(echo $jobRunScript | awk -F"Your job-array " '{print $2}' | awk -F" " '{print $1}' | awk -F"." '{print $1}')
+#jobID=$(echo $jobRunScript | awk -F"Your job " '{print $2}' | awk -F" " '{print $1}' | awk -F"." '{print $1}')
+#job2RunScript=`qsub -V -hold_jid $jobID -v listF=$listF,var2=$var2 runScript2.sh`
+
+####runScript.sh:
+
+
+#!/bin/sh
+line=`sed -n ${SGE_TASK_ID}p $listF`
+id=$(echo "$line" | awk -F"\\t" '{print $1}')
+samF=$(echo "$line" | awk -F"\\t" '{print $2}')
+
+#### More memory
+qsub -V -l h_vmem=100G ...

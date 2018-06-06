@@ -1,0 +1,63 @@
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# User specific aliases and functions
+alias l='ls -Alh'
+alias ll='ls -Al'
+alias jobs='jobs -l'
+alias h=history
+alias kill='kill -n kill'
+alias hg='h | grep -i'
+alias wcl='wc -l'
+alias wcw='wc -w'
+
+# Find a file with a pattern in name:
+function ff() { find . -type f -iname '*'$*'*' -ls ; }
+
+# invoke more on an ls
+function lm() { l $* | more ; }
+
+# command line attributes – shows full path and time
+PS1="[\t \u@\h:\w/]$ "
+
+
+# user specific FUNCTIONS
+function chead { head $1 | cut -f -8 ; } # show only the first 5 (input) columns -- change this to have 5 as default but also accept number of columns as input.
+
+
+function extract()      # Handy Extract Program.
+{
+     if [ -f $1 ] ; then
+         case $1 in
+             *.tar.bz2)   tar xvjf $1     ;;
+             *.tar.gz)    tar xvzf $1     ;;
+             *.bz2)       bunzip2 $1      ;;
+             *.rar)       unrar x $1      ;;
+             *.gz)        gunzip $1       ;;
+             *.tar)       tar xvf $1      ;;
+             *.tbz2)      tar xvjf $1     ;;
+             *.tgz)       tar xvzf $1     ;;
+             *.zip)       unzip $1        ;;
+             *.Z)         uncompress $1   ;;
+             *.7z)        7z x $1         ;;
+             *)           echo "'$1' cannot be extracted via >extract<" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
+}
+
+
+#extras
+
+# history control
+export HISTCONTROL=erasedups
+export HISTSIZE=10000
+shopt -s histappend
+
+# make bash autocomplete with up arrow
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'

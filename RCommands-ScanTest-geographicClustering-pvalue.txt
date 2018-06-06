@@ -1,0 +1,36 @@
+library("spatstat")
+
+inFname="C:\\Users\\Calvin\\Desktop\\avian_all_results_30jun2016_geoLocations-ha.txt"
+inF  = read.delim(inFname , header=FALSE)
+
+allPvInterestL = c()
+allPvOtherL = c()
+HaL = c("H1", "H3", "H4", "H5", "H6", "H7", "H9", "H10", "H11", "H16")
+for (ha in HaL){
+    m = rep(0, length(inF$V2))
+    m[which(inF$V2 == ha)] = 1
+    X <- ppp(inF$V3, inF$V4, c(211433,237725),c(4784906, 4828364), marks=m) #V3 is x and V4 is y, window, marks is the 0 or 1 depending on its class
+    X$marks <- as.factor(m)
+
+    rangePvalue = ""
+
+    pdf(paste0("C:\\Users\\Calvin\\Desktop\\geoplot\\avian_all_results_30jun2016_geoLocations_range", ha, ".pdf"))
+    radi=1000
+    individPvInterestL = c()
+    individPvOtherL = c()
+    while(radi <= 3000) {
+        outV1 = scan.test(X, radi, nsim=100, method="binomial", case=1)
+        plot(outV1, do.window = TRUE, main=paste0("\n\n\np-value: ", outV1$p.value, "\nradius: ", radi))
+
+        outV2 = scan.test(X, radi, nsim=100, method="binomial", case=2)
+        plot(outV2, do.window = TRUE, main=paste0("\n\n\np-value: ", outV2$p.value, "\nradius: ", radi))
+
+        individPvInterestL[length(individPvInterestL) + 1 ] = outV1$p.value
+        individPvOtherL[length(individPvOtherL) + 1 ] = outV2$p.value
+        radi <- radi + 500
+    }
+    dev.off()
+    allPvInterestL = rbind(allPvInterestL, individPvInterestL)
+    allPvOtherL = rbind(allPvOtherL, individPvOtherL)
+}
+

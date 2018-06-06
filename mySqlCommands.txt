@@ -1,0 +1,115 @@
+#MySQL
+
+################################
+#What are the <attribute> of the <table> which are less than <filter attribute>?
+
+SELECT
+    <attribute>
+FROM
+    <table>
+WHERE
+    <filter attribute> < 40
+
+################################
+#Merge two tables and clarifying the joining ID
+
+SELECT DISTINCT
+    <filter attribute>
+FROM
+    <table1>
+    INNER JOIN
+        <table2>
+        ON (<table1>.id = <table2>.id)
+WHERE
+    <filter attribute> > 10
+
+################################
+#... have exactly 2 counts ...
+
+SELECT
+    <attribute1>,
+    COUNT(<attribute2>)
+FROM
+    <table1>
+    INNER JOIN
+        <table2>
+        ON (<table1>.id = <table2>.id)
+GROUP BY
+    <attribute1>
+HAVING
+    COUNT(<attribute2>) = 2
+
+################################
+#... merge three tables ...
+
+SELECT
+    <table1>.<attribute>
+FROM
+    <table1>
+    INNER JOIN
+        <table2>
+        ON (<table1>.id = <table2>.id)
+    INNER JOIN
+        <table3>
+        ON (<table2>.id = <table3>.id)
+    INNER JOIN
+        <table4>
+        ON (<table3>.id = <table4>.id)
+
+################################
+#... two SELECT commands ... since only able to display group by attributes ...
+#... inner SELECT - declare name of table ...
+
+SELECT
+    ...
+FROM
+    <table1>
+    RIGHT JOIN
+        (
+            SELECT
+                ...
+            FROM
+                <table1>
+            GROUP BY
+                <attribute>
+            )
+            <inner table name>
+            ON <table1>.id=<inner table name>.id
+    INNER JOIN
+        <table2>
+        ON (<table1>.orchard_id = <table2>.id)
+
+################################
+#... rename table name ...
+
+SELECT
+    ...
+FROM
+    <table1> as <table1 new name>
+    INNER JOIN
+        <table2> as <table2 new name>
+...
+
+################################
+#... select inside where statement ...
+#... second minimum value ...
+#... add row number and condition ...
+
+SELECT
+    MIN(<attribute1>),
+    ROW_NUMBER() OVER(ORDER BY <table>.<attribute>) as rowNum,
+    (<attribute1> < <attribute2>) as <new variable name>
+FROM
+    <table>
+WHERE
+    <attribute1> > (
+        SELECT
+            MIN(<attribute1>)
+        FROM
+            <table>)
+
+################################
+#... time stamp - add 10 minute ...
+TIMESTAMP_ADD(<timestamp>, INTERVAL 10 MINUTE)
+
+

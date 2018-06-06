@@ -1,0 +1,93 @@
+#MySQL - simple
+#How to run through unix
+
+#Unix command
+mysql -u calvinlef -p < /data/home/clefebvre/roughCode/sqlTest/test.sql
+
+#SQL file
+#!/usr/bin/env mysql
+
+#tell which database you want to enter
+use database1
+#Insert a single data value
+Insert into employee(id, fullName, position, companyName, salary) value (99, 'Person 99', 'owner', 'new york times', 9900000);
+#Load data from file
+LOAD DATA LOCAL INFILE '/data/home/clefebvre/roughCode/sqlTest/dataIN.txt' INTO TABLE employee;
+
+#DATA file
+id      fullName        position        companyName     salary
+501     Person 501      window cleaner  new york times  50101
+502     Person 502      window cleaner  new york times  50201
+503     Person 503      window cleaner  new york times  50301
+
+#
+User command
+
+#enter into mysql
+mysql -u calvinlef -p
+
+# Display Available DB
+SHOW Databases;
+
+# Entering database
+use {db name}
+
+# Display existing tables
+show tables;
+
+#Delete tables
+DROP TABLE employee
+
+# Display key's and attributes of tables
+DESC company
+
+# Create table sample
+
+create table if not exists employee
+(
+    id int not null,
+    fullName varchar(50) not null,
+    position varchar(50) not null,
+    companyName varchar(50) not null,
+    salary int not null,
+    primary key(id)
+);
+
+create table if not exists company
+(
+    companyName varchar(50) not null,
+    address varchar(50) not null,
+    primary key(companyName)
+);
+
+# Insert items into database
+
+Insert into employee(id, fullName, position, companyName, salary) value (1, 'Person 1', 'writer', 'new york times', 10000);
+Insert into employee(id, fullName, position, companyName, salary) value (2, 'Person 2', 'editor', 'new york times', 20000 );
+Insert into employee(id, fullName, position, companyName, salary ) value (3, 'Person 3', 'cashier', 'mc donalds', 30000 );
+Insert into employee(id, fullName, position, companyName, salary ) value (4, 'Person 4', 'manager', 'mc donalds', 40000 );
+
+Insert into company(companyName, address) value ('new york times', 'address1');
+Insert into company(companyName, address) value ('mc donalds', 'address2');
+
+######################### Basic #########################
+
+SELECT position, companyName FROM employee;
+
+######################### WHERE, AND, OR #########################
+
+#==
+SELECT * FROM employee WHERE companyName = 'mc donalds';
+#!=, OR, AND
+SELECT * FROM employee WHERE companyName != 'mc donalds' OR (salary >= 20000 AND salary < 40000);
+#contains 'don'
+SELECT * FROM employee WHERE companyName LIKE '%don%';
+
+########################### CONCAT ############################
+
+SELECT position, CONCAT(fullName, " from ", companyName) AS combo, salary FROM employee;
+
+################# ########### COUNT ############################
+
+SELECT COUNT(*) FROM employee;
+

@@ -1,0 +1,16 @@
+#age: 29
+#nationality: korea
+#name: tom
+
+configFile="/data/home/clefebvre/roughCode/config/config.cfg"
+IFS=''
+while read line
+do
+        extractVar=$(echo $line | sed '/:/!d;/^ *#/d;s/:/ /;')
+        key=`echo -e $extractVar | awk -F ' ' '{print $1}'` #column 1
+        val=`echo -e $extractVar | awk -F ' ' '{print $2}'` #column 2
+        val="echo "${val}
+        val=$(eval "$val")
+        cmd="$key='$val'"
+        eval "$cmd"
+done <$configFile

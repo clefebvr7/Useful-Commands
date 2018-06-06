@@ -1,0 +1,35 @@
+import multiprocessing
+import os
+import random
+import sys
+import time
+
+def worker(new_value):
+    old_value = get_value()
+    set_value(random.randint(1, 99))
+    print('pid=[{pid}] '
+          'old_value=[{old_value:2}] '
+          'new_value=[{new_value:2}] '
+          'get_value=[{get_value:2}]'.format(
+          pid=str(os.getpid()),
+          old_value=old_value,
+          new_value=new_value,
+          get_value=get_value()))
+
+def get_value():
+    global global_variable
+    return global_variable
+
+def set_value(new_value):
+    global global_variable
+    global_variable = new_value
+
+global_variable = -1
+
+print('before set_value(), get_value() = [%s]' % get_value())
+set_value(new_value=-2)
+print('after  set_value(), get_value() = [%s]' % get_value())
+
+processPool = multiprocessing.Pool(processes=5)
+processPool.map(func=worker, iterable=range(15))
+

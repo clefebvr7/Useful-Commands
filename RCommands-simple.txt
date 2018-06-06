@@ -1,0 +1,42 @@
+# R simple
+
+##############################
+# Run on unix
+Rscript exCode.r
+
+##############################
+# Pass parameters
+args = commandArgs(trailingOnly=TRUE)
+firstArg=args[1]
+
+##############################
+# Read file
+inF = read.delim(inFname, header=FALSE)
+
+##############################
+# If statement
+
+if ( test_expression1) {
+     statement1
+} else if ( test_expression2) {
+     statement2
+} else {
+     statement3
+}
+
+##############################
+# For loop
+myL = c("a", "b", "c")
+for (e in myL){
+    print(e )
+}
+
+##############################
+# add element to list
+myList = c()
+myList[length(myList) + 1 ] = newValue
+
+##############################
+# remove NTC from list of strings in dtstring
+gsub("NTC", "", dtstring)
+

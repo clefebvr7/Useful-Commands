@@ -1,0 +1,154 @@
+#!/bin/sh
+
+##############################
+# Size of directores
+du -h --max-depth=1
+
+# Remaining and Used space
+df -h .
+
+##############################
+# Grab columns, 1, 4, 5 and minus 1 from column 4 and add a column with "."
+
+cat a.txt | awk '{print $1 "\t" ($4 - 1) "\t.\t" $5 }'
+
+##############################
+# Combine strings with a non variable
+a="abc"
+${a}def
+
+##############################
+# Mathematical expression (indicated by bc) and store in variable a
+c=5
+a=`bc <<< ${c}+10.99`
+
+##############################
+# List and for loop
+bamPara=(1 5 10 15 30 50 75 100 125)
+for element in ${bamPara[@]}
+do
+        echo $element
+done
+
+# For loop for a range
+
+for i in $(seq 1 $LaneEnd)
+do
+        echo $i
+done
+
+# For loop through hard set values
+for typeBloom in $noMatch $human $microbiome $rrna $globin $mito
+do
+
+# Allow a large range of hard coded
+numReadsL="10;20;50"
+echo $numReadsL | tr ';' '\n' | while read numReads; do
+
+##############################
+# Add string ($var) to the end of the filename (outF)
+echo $var >> $outF
+
+##############################
+# Splits string on \t
+echo -e $a | awk -F"\t" '{print $NF}'
+
+##############################
+# Extract filename
+extens=".bam"
+filename=$(echo $a | awk -F"/" '{print $NF}' | awk -F${extens} '{print $1}')
+
+##############################
+# Perform echo and include tabs
+echo -e "a\tb\n"
+
+##############################
+# Use a varable for inside another $ (ex. grab the nth column where nth is a variable)
+fq=`echo -e $line | awk -F '\t' '{print $'$colFastq'}'`
+
+##############################
+# Create a new list file
+listName=$(echo "$listF" | awk -F"/" '{print $NF}' | awk -F".txt" '{print $1}')
+newListF=${outDir}${listName}"-krakenL.txt"
+rm $newListF
+IFS=''
+while read line
+do
+     id=$(echo "$line" | awk -F"\\t" '{print $2}')
+     outFR1=${outDir}${id}-postKraken-unclassified-R1.fastq
+     outFR2=${outDir}${id}-postKraken-unclassified-R2.fastq
+     echo -e ${id}"\t"${outFR1}"\t"${outFR2} >> $newListF
+done <$listF
+##############################
+# Loop through a list of files
+
+filePattern="/.../.../*....txt"
+listF=$(ls ${filePattern})
+
+for filename in $listF
+do
+     ... $filename ...
+done
+
+##############################
+# split the filesStr on ", " or anyother thing you desire
+IFS=', '
+for filename in $filesStr
+do
+     echo $filename
+done
+
+##############################
+# Timing
+dOverAllS=$(date +%s)
+...
+dOverAllE=$(date +%s)
+dDiff=`bc <<< ${dOverAllS}-${dOverAllE}`
+
+##############################
+# File Size
+fileSize=$(stat -c '%s' ${filename})
+
+##############################
+# Replace part of a string (here we replace R1 with R2)
+
+a=$(echo $myStr | sed 's/R1/R2/')
+
+##############################
+# Print second item, but only if first item is equal to "m"
+
+cat $mfFile | awk '$1 == "m" {print $2}'
+
+##############################
+# If statement
+
+if [ "$value1" -eq "$value2" ]; then
+    echo "You have access!"
+else
+    echo "ACCESS DENIED!"
+fi
+
+#clear history
+history -c
+
+# unix split list into smaller chunks
+listF=$(ls ...)
+i=0
+maxVal=16
+cc=${maxVal}
+for fname in $listF
+do
+        if [ $cc -eq $maxVal ]
+        then
+                i=`bc <<< ${i}+1`
+                cc=0
+        fi
+        ...
+        cc=`bc <<< ${cc}+1`
+done
+
+# zip directory
+
+zip -r zipFileName.zip myDir/ -x myDir/exclusedThisDir/*
+
+

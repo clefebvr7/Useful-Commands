@@ -1,0 +1,101 @@
+#!/usr/bin/env python
+
+##############################
+# Import functions from other 
+sys.path.insert(0, '/data/home/clefebvre/code/pipelines/typer1/')
+from helperFunctions import *
+
+##############################
+# Split on (number, string) repetitive combo
+for alignment_len, alignment_type in zip(re.findall('([0-9]+)', cigar), re.findall('([MIDNSHPX=])', cigar)):
+     print alignment_len + "\n" + alignment_type
+
+##############################
+# GZIP read
+import gzip
+zipFname=...
+with gzip.open(zipFname,'r') as zipF:
+     for line in zipF:
+
+##############################
+# Try and except
+myDic = {}
+try:
+     if myDic[id] == 0:
+          outF.writelines(line)
+except KeyError:
+pass
+
+##############################
+# Sort list of tuples by second element descending
+myList = sorted(myList, key=lambda x: x[1], reverse=True)
+
+##############################
+# Standard in and standard out
+# echo $var | ./code.py
+import sys
+for stdinStr in sys.stdin:
+     ...stdinStr...
+     sys.stdout.write(...)
+
+##############################
+# Extract filename
+
+fname = os.path.splitext( os.path.basename(path) )[0]
+
+##############################
+# Randomly choose a percent of elements (in this example we keep 40%)
+
+import random
+probFilter = 0.4
+randV=random.random()
+if randV < probFilter:
+    keepV=1
+
+##############################
+# Read gzip file
+
+import gzip
+with gzip.open(fqZipFname,'r') as zipF:
+     for line2 in zipF:
+          ...
+
+##############################
+# remove items from list
+[x for x in myList.strip().split(" ") if x != '']
+
+##############################
+# Config parser
+
+import ConfigParser
+
+Config = ConfigParser.ConfigParser()
+Config.read(config_file)
+Config.sections()
+
+s1 = ConfigSectionMap("SectionOne")
+ncbi_file = s1["ncbifile"]
+
+##config_file
+[SectionOne]
+ncbifile: /data/home/clefebvre/data/reference/rat_nor/DBrat/taxonomy/nodes.dmp
+
+##############################
+# parameter
+
+import argparse
+
+parser = argparse.ArgumentParser(description='add desciption')
+parser.add_argument('-i', dest='infile', type=str, help='Input GenBank file', required=True)
+parser.add_argument('-o', dest='outfile', type=argparse.FileType('w'), help='Output FastA file', required=True)
+parser.add_argument('-t', dest='taxfile', type=argparse.FileType('r'), help='Input list of NCBI taxonomy IDs', required=True)
+parser.add_argument('-c', dest='configfile', type=str, help='Config file', required=True)
+args = parser.parse_args()
+
+in_file = args.infile
+out_file = args.outfile
+tax_file = args.taxfile
+config_file = args.configfile
+
+
+

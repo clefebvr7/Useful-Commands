@@ -1,0 +1,77 @@
+########### How to write and compile C++ - hello world ###########
+
+####helloWorld.cpp
+#include <iostream>
+using namespace std;
+int main(){
+     std::cout << "Hello World!";
+}
+
+####compile
+CC="/data/software/local/devtoolset-1.1/root/usr/bin/g++"
+CFLAGS="-std=c++11 -Wall"
+${CC} ${CFLAGS} helloWorld.cpp -o helloWorld
+
+####execute
+./helloWorld
+
+########### for loop through list ###########
+int functionName (int a, int b){
+  int r;
+  r=a+b;
+  return r;
+}
+
+########### list of strings ###########
+#include <string>
+#include <list>
+using std::list;
+string mylist[]={"a", "b", "c"};
+
+########### array and return array from function ###########
+
+#include <iostream>
+#include <string>
+#include <list>
+#include <array>
+using namespace std;
+using std::list;
+string *addPermutation (string *prevPerm)
+{
+        string *newPerm =new string[3];
+        newPerm[0] = prevPerm[2];
+        newPerm[1] = prevPerm[1];
+        newPerm[2] = prevPerm[0];
+        return newPerm;
+}
+int main(){
+     // create a predefined array and make a pointer to it
+     string *prevPermP;
+     string prevPermA[4] = {"A", "C", "G", "T"};
+     prevPermP = prevPermA;
+   
+     // pass a paramater and the return of a function as a pointer to an array
+     string *myResultP;
+     myResultP = addPermutation (prevPermP);
+     cout << "element in list: " << myResultP[2] << endl;
+}
+
+####################################
+# For loop
+
+for ( int i = 0; i < 4; i++ ){
+                cout << listBP[i] << endl;
+}
+
+####################################
+# concatinate strings
+
+str12 = str1 + str2;
+
+####################################
+# declaring pointers to list locally inside a function but when it is returned from the function it does not contain the proper values
+
+const unsigned int numNuc = 4;
+static int classifyNuc[numNuc];
+
+

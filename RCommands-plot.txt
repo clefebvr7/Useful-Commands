@@ -1,0 +1,75 @@
+#!/usr/bin/env Rscript
+library(ggplot2)
+library(gridExtra)
+
+args = commandArgs(trailingOnly=TRUE)
+inFname = args[1]
+inF  = read.delim(inFname , header=FALSE) # no column names, so column 1 is V1 and column 2 is V2
+
+##############################
+# scatter plot
+
+plotA<-ggplot(data=inF, aes(x=V1, y=V2)) + geom_point()
+
+##############################
+# bar plots with defined x
+
+plotA<-ggplot(data=inF, aes(x=V1)) + geom_bar()
+
+# bar plots with defined x and y values
+
+plotA<-ggplot(data=inF, aes(x=V1, y=V2)) + geom_bar(stat="identity")
+
+##############################
+# pie chart plot
+
+inF$V1 = inF$V1/sum(inF$V1) #wanted percent - may not need it
+ggplot(inF, aes(x=1, y=V1, fill=V2)) + geom_bar(stat="identity") + coord_polar(theta='y') + ggtitle("...") + theme(axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank(), axis.title.x=element_blank(), axis.title.y=element_blank())
+
+##############################
+# Grid plot - plot figures (hard coded plots)
+
+pdf(outFname)
+grid.arrange(plotA, plotB, ncol=1)
+dev.off()
+
+##############################
+# Grid plot - plot figures that are stored within a list (multiple - stored in list)
+
+# Store figures into list
+plotL=c()
+for(i in 1:length(inF[,1]))
+{
+     individFname = as.character(listF[i,1])
+     individF = read.delim(individFname, header=FALSE)
+     ploti <- ggplot(...)
+     plotL[[i]] <- ploti
+}
+
+# Plot figures - Option 1 - All on one page
+
+numCol = args[...] #number of columns
+pdf(...)
+do.call("grid.arrange", c(plotL, list(ncol=numCol)))
+dev.off()
+
+# Plot figures - Option 2 - Limited number of plots per page
+
+numCol = args[...] #number of columns
+numFigPerPage = args[...] #number of plots per page
+quotientV = length(plotL) %/% numFigPerPage
+remainderV = length(plotL) %% numFigPerPage
+posS = 1
+pdf(...)
+for(i in 1:quotientV)
+{
+     do.call("grid.arrange", c(plotL[posS:(posS+(numFigPerPage-1))], list(ncol=numCol)))
+     posS = posS + numFigPerPage
+}
+if (remainderV != 0){
+     do.call("grid.arrange", c(plotL[posS:(posS+(remainderV - 1))], list(ncol=numCol)))
+}
+dev.off()
+
+
+
